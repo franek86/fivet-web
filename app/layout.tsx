@@ -1,18 +1,14 @@
 import React from "react";
 import type { Metadata } from "next";
-import { Inter, Playfair } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
-const inter = Inter({
-  variable: "--font-inter",
-  subsets: ["latin"],
-});
-
-const playFair = Playfair({
-  variable: "--font-playfair",
+const poppins = Poppins({
+  variable: "--font-poppins",
+  weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
 });
 
@@ -25,7 +21,7 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   return (
     <html lang='en'>
-      <body className={`${inter.variable} ${playFair.variable} antialiased`}>
+      <body className={`${poppins.variable}  antialiased`}>
         <Header />
         {children}
         <Footer />

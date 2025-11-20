@@ -1,3 +1,10 @@
 {
-  "welcome": "Dobro dosli"
+  "home": {
+    "hero": {
+      "heading_streamline": "Pojednostavite",
+      "heading_vessel": "nabavu vaših",
+      "heading_procurement": "plovila",
+      "subheading": "Naša SaaS platforma pojednostavljuje pronalazak, procjenu i sklapanje poslova za trgovačke brodove i tankere."
+    }
+  }
 }

@@ -1,3 +1,10 @@
 {
-  "welcome": "Welcome"
+  "home": {
+    "hero": {
+      "heading_streamline": "Streamline",
+      "heading_vessel": "Your Vessel",
+      "heading_procurement": "Procurement",
+      "subheading": "Our SaaS platform simplifies sourcing, evaluating, and closing deals for commercial ships and tankers."
+    }
+  }
 }

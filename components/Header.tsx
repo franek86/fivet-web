@@ -14,7 +14,7 @@ const Header = () => {
   };
 
   return (
-    <header className='border-b border-gray-200 shadow-md'>
+    <header className='shadow-sm fixed w-full bg-white'>
       <div className='max-container flex items-center justify-between gap-4 p-3 h-[70px]'>
         <div className='flex'>
           <Logo />
@@ -24,9 +24,9 @@ const Header = () => {
         <div className='flex items-center gap-x-3 z-10'>
           <LangSwitcher />
           {openMobile ? (
-            <Close className='h-6 w-8 block md:hidden cursor-pointer' onClick={() => handleOpenMenu()} />
+            <Close className='h-7 w-7 block md:hidden cursor-pointer' onClick={() => handleOpenMenu()} />
           ) : (
-            <Bar className='h-6 w-8 block md:hidden cursor-pointer' onClick={() => handleOpenMenu()} />
+            <Bar className='h-7 w-7 block md:hidden cursor-pointer' onClick={() => handleOpenMenu()} />
           )}
         </div>
       </div>
