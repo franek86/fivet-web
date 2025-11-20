@@ -1,26 +1,134 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@theme {
+  --font-sans: "Inter", sans-serif;
+  --font-serif: "Playfair", sans-serif;
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
+  /* GRAY SCALE */
+  --color-grey-50: #fafafa;
+  --color-grey-100: #f5f5f5;
+  --color-grey-200: #e5e5e5;
+  --color-grey-300: #d4d4d4;
+  --color-grey-400: #a3a3a3;
+  --color-grey-500: #737373;
+  --color-grey-600: #525252;
+  --color-grey-700: #404040;
+  --color-grey-800: #262626;
+  --color-grey-900: #171717;
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  /* PRIMARY / SECONDARY */
+  --color-primary: #1d4e89;
+  --color-secondary: #00bfff;
+
+  /* TEXT & BASE COLORS */
+  --color-text: var(--color-grey-700);
+  --color-black: #1e1e1e;
+  --color-white: #ffffff;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  color: var(--color-text);
+  scroll-behavior: smooth;
+  font-family: var(--font-sans);
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h5 {
+    font-family: var(--font-serif);
+    font-weight: 600;
+  }
+
+  /* HERO / PAGE TITLE */
+  h1 {
+    @apply text-4xl sm:text-5xl md:text-6xl lg:text-7xl;
+    line-height: 1.1;
+  }
+
+  /* SECTION TITLE */
+  h2 {
+    @apply text-3xl sm:text-4xl md:text-5xl;
+    line-height: 1.2;
+  }
+
+  /* SUBTITLE / FEATURE TITLE */
+  h3 {
+    @apply text-2xl sm:text-3xl md:text-4xl;
+    line-height: 1.25;
+  }
+
+  /* CARD OR SMALL SECTION TITLE */
+  h4 {
+    @apply text-xl sm:text-2xl md:text-3xl;
+    line-height: 1.3;
+  }
+
+  /* LABEL / SMALL HEADING */
+  h5 {
+    @apply text-lg sm:text-xl md:text-2xl;
+    line-height: 1.4;
+  }
+}
+
+@layer components {
+  .max-container {
+    @apply mx-auto max-w-[1400px] px-4 lg:px-12;
+  }
+
+  .btn {
+    @apply inline-flex items-center justify-center text-sm font-semibold transition-all duration-200
+  rounded-xl px-6 py-3 select-none focus:outline-none cursor-pointer;
+  }
+
+  /* SOLID BUTTON */
+  .btn-solid {
+    @apply bg-primary text-white hover:bg-primary/80 shadow-sm;
+  }
+
+  /* OUTLINE BUTTON */
+  .btn-outline {
+    @apply border border-primary text-primary hover:bg-primary hover:text-white;
+  }
+
+  /* WHITE BUTTON */
+  .btn-white {
+    @apply bg-white text-grey-700 border border-grey-200 hover:bg-grey-100;
+  }
+
+  /* LIGHT BUTTON */
+  .btn-light {
+    @apply bg-secondary/10 text-secondary hover:bg-secondary hover:text-white;
+  }
+
+  /* Fokus i disable stanje */
+  .btn:focus {
+    @apply ring-2 ring-offset-2 ring-primary;
+  }
+
+  .btn:disabled {
+    @apply opacity-60 cursor-not-allowed;
+  }
+
+  /* Male i velike varijante */
+  .btn-sm {
+    @apply text-sm px-4 py-2 rounded-lg;
+  }
+
+  .btn-lg {
+    @apply text-lg px-8 py-4 rounded-2xl;
+  }
+}
+
+@layer utilities {
+  .active-link {
+    @apply relative after:w-2/5 after:h-1 after:rounded-full after:bg-primary after:absolute after:-bottom-0.5 after:right-3;
+  }
 }
