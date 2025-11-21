@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   return (
     <html lang='en'>
-      <body className={`${poppins.variable}  antialiased`}>
+      <body className={`${poppins.variable} antialiased`}>
         <Header />
         {children}
         <Footer />

@@ -1,4 +1,5 @@
 "use client";
+
 import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import i18n from "@/i18n";
@@ -16,7 +17,6 @@ const LANGUAGES: Language[] = [
   { code: "hr", label: "hrvatski", flagSrc: "/flags/hr.png" },
   { code: "en", label: "english", flagSrc: "/flags/us.png" },
 ];
-
 const LangSwitcher = () => {
   const [open, setOpen] = useState<boolean>(false);
   const dropdownRef = useRef<HTMLDivElement | null>(null);

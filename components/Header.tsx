@@ -1,5 +1,7 @@
 "use client";
+
 import { useState } from "react";
+
 import Nav from "./Nav";
 import LangSwitcher from "./LangSwitcher";
 import Logo from "./Logo";

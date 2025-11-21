@@ -1,4 +1,4 @@
-import { ChangeEvent, ChangeEventHandler, InputHTMLAttributes, ReactNode, Ref } from "react";
+import { ChangeEvent, InputHTMLAttributes, ReactNode, Ref } from "react";
 
 type HTMLInputType = Omit<InputHTMLAttributes<HTMLInputElement>, "onChange">;
 
@@ -17,7 +17,7 @@ const InputBox = (props: InputProps) => {
   const { id, value, disabled, label, Icon, error, type = "text", ref, onChange, ...rest } = props;
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e);
+    console.log(e.target.value);
     onChange?.(e.target.value);
   };
   return (
