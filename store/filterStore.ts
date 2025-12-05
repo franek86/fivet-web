@@ -8,17 +8,17 @@ export type SelectType = {
 type FilterType = {
   vessel: SelectType | null;
   tonnage: string;
-  beam: number;
+  beam: [number, number];
   setVessel: (v: SelectType | null) => void;
-  setBeam: (v: number) => void;
+  setBeam: (v: [number, number]) => void;
   setTonnage: (v: string) => void;
   reset: () => void;
 };
 
 export const useFilterStore = create<FilterType>((set) => ({
-  vessel: null,
-  tonnage: "",
-  beam: 0,
+  vessel: { id: "Tanker", label: "Tanker" },
+  tonnage: "1000",
+  beam: [0, 1500],
 
   setVessel: (vessel) => set({ vessel }),
   setBeam: (beam) => set({ beam }),
@@ -26,7 +26,7 @@ export const useFilterStore = create<FilterType>((set) => ({
   reset: () =>
     set({
       vessel: null,
-      beam: 0,
+      beam: [0, 1500],
       tonnage: "",
     }),
 }));

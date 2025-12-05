@@ -30,7 +30,7 @@ const SearchBar = () => {
 
     const params = new URLSearchParams();
     params.set("vessel", String(vessel?.label));
-    params.set("beam", String(beam));
+    params.set("beam", `${beam[0]}-${beam[1]}`);
     params.set("tonnage", String(tonnage));
 
     router.push(`/search?${params.toString()}`);
@@ -45,7 +45,7 @@ const SearchBar = () => {
           </div>
 
           <div className='flex flex-col'>
-            <RangeBox label={t("search.beam")} min={100} max={1200} value={beam} onChange={setBeam} />
+            <RangeBox label={t("search.beam")} min={0} max={2000} value={beam} onChange={setBeam} />
           </div>
           <div className='flex flex-col'>
             <InputBox

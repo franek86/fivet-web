@@ -1,5 +1,6 @@
 "use client";
 
+import { parseRangeParam } from "@/helpers/parseRange";
 import { useFilterStore } from "@/store/filterStore";
 import { useSearchParams } from "next/navigation";
 import { useEffect } from "react";
@@ -17,7 +18,8 @@ const Search = () => {
     const tonnage = searchParams.get("tonnage");
 
     if (vessel) setVessel({ id: vessel, label: vessel });
-    if (beam) setBeam(Number(beam));
+    const parsedBeam = parseRangeParam(beam, true);
+    if (parsedBeam) setBeam(parsedBeam);
     if (tonnage) setTonnage(tonnage);
   }, []);
 
