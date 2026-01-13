@@ -1,8 +1,10 @@
+import { parseShipFiltersFromUrl } from "@/helpers/parseShipFilters";
 import { fetchShips } from "@/libs/api/ships";
 
 import { Ship } from "@/types/ships";
 import { useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
+import ShipCard from "./ui/ShipCard";
 
 const Ships = () => {
   const searchParams = useSearchParams();
@@ -10,58 +12,44 @@ const Ships = () => {
   const [errorShips, setErrorShips] = useState<string | null>(null);
   const [loadingShips, setLoadingShips] = useState(false);
 
-  const [currentVessel, setCurrentVessel] = useState<string[]>(searchParams.get("shipType")?.split(",") || []);
-  const [currentBeam, setCurrentBeam] = useState<[number, number]>([0, 2000]);
-  const [currentMinTonnage, setCurrentMinTonnage] = useState<number>();
-  const [currentMaxTonnage, setCurrentMaxTonnage] = useState<number>();
-
-  const vessels = searchParams.get("shipType")?.split(",") || [];
-  const beamStr = searchParams.get("beam");
-  const minTonnage = searchParams.get("minTonnage");
-  const maxTonnage = searchParams.get("maxTonnage");
-
-  const beamParsed = beamStr ? (beamStr.split("-").map(Number) as [number, number]) : undefined;
-  const maxTonnageParsed = maxTonnage ? Number(maxTonnage) : undefined;
-  const minTonnageParsed = minTonnage ? Number(minTonnage) : undefined;
-
-  const loadShips = async () => {
+  const loadShips = async (params: any) => {
     setLoadingShips(true);
     setErrorShips(null);
     try {
       const { data } = await fetchShips({
-        shipType: vessels,
-        beam: beamParsed,
-        minTonnage: minTonnageParsed,
-        maxTonnage: maxTonnageParsed,
+        ...params,
+        //TO DO: pagination
       });
       setShips(data);
     } catch (error) {
       console.log(error);
-      setErrorShips("Gettin ships error");
+      setErrorShips("Error");
     } finally {
       setLoadingShips(false);
     }
   };
 
   useEffect(() => {
-    loadShips();
-  }, []);
+    const filters = parseShipFiltersFromUrl(searchParams);
+
+    loadShips(filters);
+  }, [searchParams]);
 
   if (loadingShips) return <p>Loading products...</p>;
   if (errorShips) return <p>Error: {errorShips}</p>;
 
   return (
-    <div>
+    <section className='my-8 grid grid-cols-3 gap-5'>
       {!ships || ships.length === 0 ? (
         <div>No ships found</div>
       ) : (
-        ships?.map((s) => (
-          <div key={s.id}>
-            <p className='text-2xl'>{s.shipName}</p>
+        ships?.map((ship) => (
+          <div key={ship.id}>
+            <ShipCard ship={ship} />
           </div>
         ))
       )}
-    </div>
+    </section>
   );
 };
 

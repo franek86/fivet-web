@@ -6,7 +6,9 @@ export const parseShipFiltersFromUrl = (searchParams: URLSearchParams): ShipFilt
 
   // ship type multi select
   const shipTypeParam = searchParams.get("shipType")?.split(",") ?? [];
-  if (shipTypeParam) filters.shipType;
+  if (shipTypeParam.length > 0) {
+    filters.shipType = shipTypeParam;
+  }
 
   //beam range
   const beamParam = searchParams.get("beam");
