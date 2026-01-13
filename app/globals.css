@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: "Poppins", sans-serif;
+  --font-sans: "Urbanist", sans-serif;
 
   /* GRAY SCALE */
   --color-grey-50: #fafafa;
@@ -29,6 +29,7 @@ body {
   color: var(--color-text);
   scroll-behavior: smooth;
   font-family: var(--font-sans);
+  font-size: 1.6rem;
 }
 
 ::-webkit-scrollbar {
@@ -74,6 +75,11 @@ body {
     @apply text-lg sm:text-xl md:text-2xl;
     line-height: 1.4;
   }
+
+  input[type="number"]::-webkit-inner-spin-button,
+  input[type="number"]::-webkit-outer-spin-button {
+    @apply appearance-none;
+  }
 }
 
 @layer components {
@@ -82,8 +88,8 @@ body {
   }
 
   .btn {
-    @apply inline-flex items-center justify-center text-sm font-semibold transition-all duration-200
-  rounded-xl px-6 py-3 select-none focus:outline-none cursor-pointer;
+    @apply inline-flex items-center justify-center text-lg font-semibold transition-all duration-200
+  rounded p-5 select-none focus:outline-none cursor-pointer;
   }
 
   /* SOLID BUTTON */
@@ -108,7 +114,7 @@ body {
 
   /* GRADIENT BUTTON */
   .btn-gradient {
-    @apply bg-linear-to-t from-secondary to-primary/70 text-stone-100 transition-all duration-200 hover:from-primary hover:to-secondary;
+    @apply bg-linear-to-r from-blue-500 to-purple-500 text-white transition-all duration-200 hover:from-blue-300 hover:to-purple-300;
   }
 
   /* Fokus i disable stanje */
@@ -120,13 +126,12 @@ body {
     @apply opacity-60 cursor-not-allowed;
   }
 
-  /* Male i velike varijante */
   .btn-sm {
-    @apply text-sm px-4 py-2 rounded-lg;
+    @apply text-sm px-4 py-2;
   }
 
   .btn-lg {
-    @apply text-lg px-8 py-4 rounded-2xl;
+    @apply text-lg px-8 py-4;
   }
 
   .inputContainer {
@@ -135,10 +140,23 @@ body {
   .labelInput {
     @apply text-sm text-grey-600;
   }
+
+  /* Custom select */
+  .custom-select__control {
+    @apply rounded border border-gray-400 py-1 mt-1.5 text-left text-sm text-gray-600 focus:border-primary focus:outline-hidden outline-none shadow hover:border-primary;
+  }
+
+  .custom-select__menu {
+    @apply text-sm;
+  }
 }
 
 @layer utilities {
   .active-link {
     @apply relative after:w-2/5 after:h-1 after:rounded-full after:bg-primary after:absolute after:-bottom-0.5 after:right-3;
+  }
+
+  .bg-gradient-linear {
+    @apply bg-linear-to-r from-blue-500 to-purple-500;
   }
 }

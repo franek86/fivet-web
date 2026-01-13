@@ -1,13 +1,13 @@
 import React from "react";
 import type { Metadata } from "next";
-import { Poppins } from "next/font/google";
+import { Urbanist } from "next/font/google";
 import "./globals.css";
 
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 
-const poppins = Poppins({
-  variable: "--font-poppins",
+const urbanist = Urbanist({
+  variable: "--font-urbanist",
   weight: ["400", "500", "600", "700"],
   subsets: ["latin"],
 });
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
 const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
   return (
     <html lang='en'>
-      <body className={`${poppins.variable} antialiased`}>
+      <body className={`${urbanist.variable} antialiased`}>
         <Header />
         {children}
         <Footer />

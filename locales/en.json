@@ -8,6 +8,32 @@
     }
   },
 
+  "pricing": {
+    "title": "Choose the plan that fits your fleet",
+    "subtitle": "Start free and upgrade anytime for unlimited ships, events and AI tools.",
+    "standard": {
+      "title": "Standard",
+      "subtitle": "Perfect to try",
+      "feature1": "Create, edit & delete ships",
+      "feature2": "Addressar access",
+      "feature3": "Includes 10 free ships",
+      "buttonLabel": "Buy — $2.99 / mo",
+      "note": "Billed monthly. Cancel anytime."
+    },
+
+    "premium": {
+      "title": "Premium",
+      "subtitle": "For teams & power users",
+      "feature1": "Unlimited ships",
+      "feature2": "Addressar included",
+      "feature3": "Event Manager",
+      "feature4": "AI Generator — ship descriptions & logs",
+      "feature5": "Priority support",
+      "buttonLabel": "Upgrade — $14.99 / mo",
+      "note": "Billed monthly. Cancel anytime."
+    }
+  },
+
   "search": {
     "select_options": "Select a options",
     "select_vessel": "Select vessel",

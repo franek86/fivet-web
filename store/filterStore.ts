@@ -1,32 +1,65 @@
+import { getAllShipTypes } from "@/libs/api/ships";
+import { SelectType } from "@/types/global";
+import { ShipFilters } from "@/types/ships";
 import { create } from "zustand";
 
-export type SelectType = {
-  id: number | string;
-  label: string;
-};
+interface FilterShipStore extends ShipFilters {
+  getVessels: SelectType[] | null;
+  selectedVesel: SelectType | null;
 
-type FilterType = {
-  vessel: SelectType | null;
-  tonnage: string;
-  beam: [number, number];
-  setVessel: (v: SelectType | null) => void;
-  setBeam: (v: [number, number]) => void;
-  setTonnage: (v: string) => void;
+  setSelectedVesel: (vesel: SelectType | null) => void;
+
+  setVessels: (vessels: string[]) => void;
+  setBeam: (beam: [number, number]) => void;
+  setMinTonnage: (value?: number) => void;
+  setMaxTonnage: (value?: number) => void;
   reset: () => void;
-};
 
-export const useFilterStore = create<FilterType>((set) => ({
-  vessel: { id: "Tanker", label: "Tanker" },
-  tonnage: "1000",
-  beam: [0, 1500],
+  loading: boolean;
+  error: string | null;
 
-  setVessel: (vessel) => set({ vessel }),
+  fetchShipTypes: () => Promise<void>;
+}
+
+export const useFilterStore = create<FilterShipStore>((set) => ({
+  getVessels: [],
+  shipType: [],
+  beam: [0, 2000],
+  minTonnage: undefined,
+  maxTonnage: undefined,
+
+  selectedVesel: null,
+  setSelectedVesel: (vesel) => {
+    set({ selectedVesel: vesel });
+  },
+
+  setVessels: (shipType) => set({ shipType }),
   setBeam: (beam) => set({ beam }),
-  setTonnage: (tonnage) => set({ tonnage }),
-  reset: () =>
+  setMinTonnage: (minTonnage) => set({ minTonnage }),
+  setMaxTonnage: (maxTonnage) => set({ maxTonnage }),
+  reset: () => {
     set({
-      vessel: null,
-      beam: [0, 1500],
-      tonnage: "",
-    }),
+      shipType: [],
+      beam: [0, 2000],
+      minTonnage: undefined,
+      maxTonnage: undefined,
+    });
+  },
+
+  loading: false,
+  error: null,
+
+  fetchShipTypes: async () => {
+    try {
+      set({ loading: true, error: null });
+
+      const data = await getAllShipTypes();
+      const response = data.map((v) => ({ id: v.id, label: v.name }));
+      set({ getVessels: response });
+    } catch (err) {
+      set({ error: "Failed to load ship types" });
+    } finally {
+      set({ loading: false });
+    }
+  },
 }));

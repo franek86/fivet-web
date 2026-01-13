@@ -1,63 +1,49 @@
 "use client";
 
-import InputBox from "./ui/InputBox";
-import RangeBox from "./ui/RangeBox";
-import SelectBox from "./ui/SelectBox";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { useFilterStore } from "@/store/filterStore";
 import { useTranslation } from "react-i18next";
-
-const testData = [
-  { id: 1, label: "Tanker" },
-  { id: 2, label: "Cargo" },
-  { id: 3, label: "Bulk" },
-];
+import { BeamRange, TonnageInput, VesselsSelectInput } from "./filterFields";
+import { buildShipQuery } from "@/helpers/buildShipQuery";
 
 const SearchBar = () => {
   const { t } = useTranslation();
   const router = useRouter();
 
-  const vessel = useFilterStore((s) => s.vessel);
-  const beam = useFilterStore((s) => s.beam);
-  const tonnage = useFilterStore((s) => s.tonnage);
-
-  const setVessel = useFilterStore((s) => s.setVessel);
-  const setBeam = useFilterStore((s) => s.setBeam);
-  const setTonnage = useFilterStore((s) => s.setTonnage);
+  const [selectedShipType, setSelectedShipType] = useState<string[]>([]);
+  const [beam, setBeam] = useState<[number, number]>([0, 2000]);
+  const [minTonnage, setMinTonnage] = useState<number>();
+  const [maxTonnage, setMaxTonnage] = useState<number>();
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
-    const params = new URLSearchParams();
-    params.set("vessel", String(vessel?.label));
-    params.set("beam", `${beam[0]}-${beam[1]}`);
-    params.set("tonnage", String(tonnage));
+    const query = buildShipQuery({
+      shipType: selectedShipType,
+      beam,
+      minTonnage,
+      maxTonnage,
+    });
 
-    router.push(`/search?${params.toString()}`);
+    router.replace(`/search?${query}`, { scroll: false });
   };
 
   return (
     <section className='w-full md:w-4/5'>
       <div className='shadow-lg bg-white px-5 md:px-10 py-5 rounded-xl'>
         <form onSubmit={handleSubmit} className='grid gap-4 sm:grid-cols-2 lg:grid-cols-4'>
-          <div>
-            <SelectBox data={testData} value={vessel} placeholder={t("search.select_vessel")} onChange={(option) => setVessel(option)} />
+          <div className='flex flex-col'>
+            <VesselsSelectInput value={selectedShipType} onChange={setSelectedShipType} />
           </div>
 
           <div className='flex flex-col'>
-            <RangeBox label={t("search.beam")} min={0} max={2000} value={beam} onChange={setBeam} />
+            <BeamRange value={beam} onChange={setBeam} />
           </div>
           <div className='flex flex-col'>
-            <InputBox
-              label={t("search.tonnage")}
-              id='tonage'
-              value={tonnage ?? undefined}
-              onChange={(value) => setTonnage(value)}
-              placeholder={t("search.enter_tonnage")}
-            />
+            <TonnageInput minValue={minTonnage} maxValue={maxTonnage} onMinChange={setMinTonnage} onMaxChange={setMaxTonnage} />
           </div>
           <div className='flex flex-col justify-end'>
-            <button className='btn btn-gradient'>{t("search.find")}</button>
+            <button className='btn btn-gradient leading-1.5'>{t("search.find")}</button>
           </div>
         </form>
       </div>

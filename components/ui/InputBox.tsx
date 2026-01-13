@@ -4,7 +4,7 @@ type HTMLInputType = Omit<InputHTMLAttributes<HTMLInputElement>, "onChange">;
 
 interface InputProps extends HTMLInputType {
   id?: string;
-  value?: string;
+  value?: string | number;
   disabled?: boolean;
   label?: string;
   Icon?: ReactNode;
@@ -17,7 +17,6 @@ const InputBox = (props: InputProps) => {
   const { id, value, disabled, label, Icon, error, type = "text", ref, onChange, ...rest } = props;
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e.target.value);
     onChange?.(e.target.value);
   };
   return (
@@ -27,7 +26,7 @@ const InputBox = (props: InputProps) => {
           {label}
         </label>
       )}
-      <input {...rest} id={id} className='inputContainer' value={value} disabled={disabled} onChange={handleChange} />
+      <input id={id} type={type} className='inputContainer w-full' value={value} disabled={disabled} onChange={handleChange} {...rest} />
     </>
   );
 };

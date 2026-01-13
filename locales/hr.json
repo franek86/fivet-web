@@ -8,6 +8,33 @@
     }
   },
 
+  "pricing": {
+    "title": "Odaberite plan koji odgovara vašoj floti",
+    "subtitle": "Počnite besplatno i nadogradite u bilo kojem trenutku za neograničen broj brodova, događaja i AI alata.",
+
+    "standard": {
+      "title": "Standard",
+      "subtitle": "Savršeno za početak",
+      "feature1": "Kreirajte, uređujte i brišite brodove",
+      "feature2": "Pristup Addressar-u",
+      "feature3": "Uključuje 10 besplatnih brodova",
+      "buttonLabel": "Kupi — 2,99 $ / mjesečno",
+      "note": "Naplaćuje se mjesečno. Otkažite u bilo kojem trenutku."
+    },
+
+    "premium": {
+      "title": "Premium",
+      "subtitle": "Za timove i napredne korisnike",
+      "feature1": "Neograničeno brodova",
+      "feature2": "Addressar uključen",
+      "feature3": "Upravitelj događaja",
+      "feature4": "AI Generator — opisi i zapisi brodova",
+      "feature5": "Prioritetna podrška",
+      "buttonLabel": "Nadogradi — 14,99 $ / mjesečno",
+      "note": "Naplaćuje se mjesečno. Otkažite u bilo kojem trenutku."
+    }
+  },
+
   "search": {
     "select_options": "Odaberi opcije",
     "select_vessel": "Vrsta plovila",

@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export const api = axios.create({
+export const apiClient = axios.create({
   baseURL: process.env.NEXT_PUBLIC_API_BASE_URL,
   headers: {
     "Content-Type": "application/json",
@@ -9,7 +9,7 @@ export const api = axios.create({
 });
 
 // Optional: Response error interceptor
-api.interceptors.response.use(
+apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
     const message = error?.response?.data?.message || error.message || "API Error";
