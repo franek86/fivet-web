@@ -12,16 +12,10 @@ const AsideSearch = () => {
   const filters = parseShipFiltersFromUrl(searchParams);
 
   const [selectedShipType, setSelectedShipType] = useState<string[]>(() => searchParams.get("shipType")?.split(",") ?? []);
-  const [beam, setBeam] = useState<[number, number]>(filters.beam ?? [0, 2000]);
-  const [minTonnage, setMinTonnage] = useState<number | undefined>(0);
-  const [maxTonnage, setMaxTonnage] = useState<number | undefined>(1000);
+  const [beam, setBeam] = useState<[number, number]>(() => filters.beam ?? [0,2000]);
+  const [minTonnage, setMinTonnage] = useState<number | undefined>();
+  const [maxTonnage, setMaxTonnage] = useState<number | undefined>();
 
-  /*   useEffect(() => {
-    setSelectedShipType(filters.shipType ?? []);
-    setBeam(filters.beam ?? [0, 100]);
-    setMinTonnage(filters.minTonnage ?? 0);
-    setMaxTonnage(filters.maxTonnage ?? 1000);
-  }, [searchParams.toString()]); */
 
   useEffect(() => {
     const query = buildShipQuery({

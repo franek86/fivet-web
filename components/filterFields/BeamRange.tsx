@@ -11,7 +11,7 @@ const BeamRange = ({ value, onChange }: BeamProps) => {
 
   return (
     <>
-      <RangeBox label={t("search.beam")} min={0} max={2000} value={value} onHandleChange={onChange} />
+      <RangeBox label={t("search.beam")} min={value[0]} max={value[1]} value={value} onHandleChange={onChange} />
     </>
   );
 };

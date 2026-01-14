@@ -17,7 +17,7 @@ export const buildShipQuery = (filters?: ShipFilters): string => {
     params.set("maxTonnage", String(filters.maxTonnage));
   }
 
-  if (filters.beam) {
+  if (filters.beam !== undefined && !(filters.beam[0] === 0 && filters.beam[1] === 2000))  {
     params.set("beam", `${filters.beam[0]}-${filters.beam[1]}`);
   }
 

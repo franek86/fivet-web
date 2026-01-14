@@ -23,6 +23,9 @@ export interface Ship {
   shipName: string;
   imo: number;
   typeId: string;
+  shipType:{
+      name:string
+      },
   refitYear: number;
   buildYear: number;
   price: number;

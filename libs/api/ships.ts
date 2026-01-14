@@ -13,7 +13,7 @@ export const getAllShipTypes = async (): Promise<ShipTypeResponse> => {
   }
 };
 
-/* get numeric ship fields e.g min-max price max tonnage */
+/* get numeric ship fields e.g min-max price max tonnage beam */
 export const getShipNumericFields = async () => {
   try {
     const res = await apiClient.get("/ships/numeric-fields");

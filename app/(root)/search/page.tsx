@@ -13,7 +13,7 @@ const Search = () => {
   const [sideBarOpen, setSideBarOpen] = useState(true);
 
   return (
-    <main className='h-screen grid grid-cols-12 pt-6 md:pt-16'>
+    <main className='h-full grid grid-cols-12 pt-6 md:pt-16'>
       <aside className={`col-span-3 p-4 transition-all duration-300 ${sideBarOpen ? "flex" : "hidden"}`}>
         <AsideSearch />
       </aside>
