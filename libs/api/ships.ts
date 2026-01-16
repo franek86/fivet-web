@@ -1,6 +1,6 @@
 import { buildShipQuery } from "@/helpers/buildShipQuery";
 import { apiClient } from "./axios";
-import { NumericFieldsResponse, ShipFilters, ShipsResponse, ShipTypeResponse } from "@/types/ships";
+import { NumericFieldsResponse, Ship, ShipFilters, ShipsResponse, ShipTypeResponse } from "@/types/ships";
 
 /* get all ship types */
 export const getAllShipTypes = async (): Promise<ShipTypeResponse> => {
@@ -29,6 +29,17 @@ export const fetchShips = async (filters?: ShipFilters): Promise<ShipsResponse> 
   try {
     const query = buildShipQuery(filters);
     const response = await apiClient.get(`/ships/published?${query}`);
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+/* fetch single ship */
+export const fetchShip = async (slug: string): Promise<Ship> => {
+  try {
+    const response = await apiClient.get(`/ships/published/${slug}`);
     return response.data;
   } catch (error) {
     console.log(error);

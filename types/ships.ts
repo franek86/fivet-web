@@ -21,11 +21,12 @@ export interface ShipFilters {
 export interface Ship {
   id: string;
   shipName: string;
+  slug: string;
   imo: number;
   typeId: string;
-  shipType:{
-      name:string
-      },
+  shipType: {
+    name: string;
+  };
   refitYear: number;
   buildYear: number;
   price: number;

@@ -12,10 +12,9 @@ const AsideSearch = () => {
   const filters = parseShipFiltersFromUrl(searchParams);
 
   const [selectedShipType, setSelectedShipType] = useState<string[]>(() => searchParams.get("shipType")?.split(",") ?? []);
-  const [beam, setBeam] = useState<[number, number]>(() => filters.beam ?? [0,2000]);
+  const [beam, setBeam] = useState<[number, number]>(() => filters.beam ?? [0, 2000]);
   const [minTonnage, setMinTonnage] = useState<number | undefined>();
   const [maxTonnage, setMaxTonnage] = useState<number | undefined>();
-
 
   useEffect(() => {
     const query = buildShipQuery({
@@ -29,7 +28,7 @@ const AsideSearch = () => {
   }, [selectedShipType, beam, minTonnage, maxTonnage, router]);
 
   return (
-    <form className='w-full p-8'>
+    <form className='w-full py-8 px-4'>
       <div className='mb-6'>
         <VesselsSelectInput value={selectedShipType} onChange={setSelectedShipType} />
       </div>

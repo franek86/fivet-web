@@ -1,24 +1,15 @@
 "use client";
 import Image from "next/image";
 import { Price } from "../Price";
-
-type ShipData = {
-  mainImage: string | null;
-  shipName: string;
-  imo: number;
-  price: number;
-  shipType:{
-      name:string
-      }
-};
+import Link from "next/link";
+import { Ship } from "@/types/ships";
 
 type ShipDataProps = {
-  ship: ShipData;
+  ship: Ship;
 };
 
 const ShipCard = ({ ship }: ShipDataProps) => {
-
-  const { mainImage, shipName, imo, price, shipType } = ship;
+  const { mainImage, shipName, imo, price, shipType, slug } = ship;
   return (
     <article className='max-w-sm rounded-2xl overflow-hidden shadow-lg bg-white'>
       {mainImage ? (
@@ -32,9 +23,9 @@ const ShipCard = ({ ship }: ShipDataProps) => {
 
       <header className='p-4'>
         <h1 className='text-lg font-semibold text-gray-900'>{shipName} </h1>
-        <div className="flex justify-between mt-1">
-            <h2 className="text-sm font-semibold text-primary">{shipType?.name}</h2>
-            <p className='mt-1 text-sm text-gray-600'>IMO: {imo}</p>
+        <div className='flex justify-between mt-1'>
+          <h2 className='text-sm font-semibold text-primary'>{shipType?.name}</h2>
+          <p className='mt-1 text-sm text-gray-600'>IMO: {imo}</p>
         </div>
       </header>
 
@@ -45,9 +36,11 @@ const ShipCard = ({ ship }: ShipDataProps) => {
       </section>
 
       <footer className='p-4 flex items-center justify-between'>
-        <button className='btn btn-sm btn-gradient cursor-pointer'>
-          <p className='text-white text-md'>View details</p>
-        </button>
+        <Link href={`/ship/${encodeURIComponent(slug)}`}>
+          <button className='btn btn-sm btn-gradient cursor-pointer'>
+            <p className='text-white text-md'>View details</p>
+          </button>
+        </Link>
       </footer>
     </article>
   );

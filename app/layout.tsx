@@ -23,7 +23,7 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
     <html lang='en'>
       <body className={`${urbanist.variable} antialiased`}>
         <Header />
-        {children}
+        <main className='pt-[70px]'>{children}</main>
         <Footer />
       </body>
     </html>

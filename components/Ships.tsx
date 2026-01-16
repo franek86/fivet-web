@@ -39,7 +39,7 @@ const Ships = () => {
   if (errorShips) return <p>Error: {errorShips}</p>;
 
   return (
-    <section className='my-8 grid grid-cols-3 gap-5'>
+    <section className='my-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4'>
       {!ships || ships.length === 0 ? (
         <div>No ships found</div>
       ) : (
