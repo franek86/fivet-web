@@ -1,4 +1,4 @@
-import { RangeBox } from "../ui";
+import { RangeBox } from "../form";
 import { useTranslation } from "react-i18next";
 
 type BeamProps = {

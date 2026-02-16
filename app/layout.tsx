@@ -1,5 +1,7 @@
 import React from "react";
 import type { Metadata } from "next";
+import QueryProvider from "@/providers/QueryProvider";
+
 import { Urbanist } from "next/font/google";
 import "./globals.css";
 
@@ -23,7 +25,9 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
     <html lang='en'>
       <body className={`${urbanist.variable} antialiased`}>
         <Header />
-        <main className='pt-[70px]'>{children}</main>
+        <main className='pt-[70px]'>
+          <QueryProvider>{children}</QueryProvider>
+        </main>
         <Footer />
       </body>
     </html>

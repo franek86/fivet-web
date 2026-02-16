@@ -1,7 +1,7 @@
 "use client";
 import { useTranslation } from "react-i18next";
 
-import { PriceCard } from "../ui";
+import { PriceCard } from "../form";
 import { PriceCardProps } from "@/types/priceCard";
 
 const PriceSection = () => {

@@ -11,11 +11,11 @@ export interface NumericFieldsResponse {
   _max: Record<string, number>;
 }
 
-export interface ShipFilters {
-  shipType?: string[];
+export interface ShipFiltersProps {
+  shipType: string[];
   minTonnage?: number;
   maxTonnage?: number;
-  beam?: [number, number];
+  beam: [number, number];
 }
 
 export interface Ship {

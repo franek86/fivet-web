@@ -1,31 +1,18 @@
-import { ShipFilters } from "@/types/ships";
+import { ShipFiltersProps } from "@/types/ships";
+import { parseRangeParam } from "./parseRange";
+
+type ShipFilterDefaults = Partial<{
+  beam: [number, number];
+  price: [number, number];
+  tonnage: [number, number];
+}>;
 
 /* Deserialize query params into typed filters */
-export const parseShipFiltersFromUrl = (searchParams: URLSearchParams): ShipFilters => {
-  const filters: ShipFilters = {};
-
-  // ship type multi select
-  const shipTypeParam = searchParams.get("shipType")?.split(",") ?? [];
-  if (shipTypeParam.length > 0) {
-    filters.shipType = shipTypeParam;
-  }
-
-  //beam range
-  const beamParam = searchParams.get("beam");
-  if (beamParam) {
-    const [min, max] = beamParam.split("-").map(Number);
-    if (!isNaN(min) && !isNaN(max)) {
-      filters.beam = [min, max];
-    }
-  }
-
-  //Min tonnage
-  const minTonnageParam = searchParams.get("minTonnage");
-  if (minTonnageParam) filters.minTonnage = Number(minTonnageParam);
-
-  //Max tonnage
-  const maxTonnageParam = searchParams.get("maxTonnage");
-  if (maxTonnageParam) filters.maxTonnage = Number(maxTonnageParam);
-
-  return filters;
+export const parseShipFiltersFromUrl = (searchParams: URLSearchParams, defaults?: ShipFilterDefaults): ShipFiltersProps => {
+  return {
+    shipType: searchParams.get("shipType")?.split(",") ?? [],
+    minTonnage: searchParams.get("minTonnage") ? Number(searchParams.get("minTonnage")) : undefined,
+    maxTonnage: searchParams.get("maxTonnage") ? Number(searchParams.get("maxTonnage")) : undefined,
+    beam: parseRangeParam(searchParams.get("beam"), defaults?.beam ?? [0, 2000]),
+  };
 };

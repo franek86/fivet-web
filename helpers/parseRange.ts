@@ -1,28 +1,20 @@
 /**
- * Parses a search param string into a number or number range.
- *
- * @param param - string from URL searchParams
- * @param isRange - whether to parse as a range [from, to]
- * @returns number | [number, number] | null
+ * Helper to parse a numeric param into number | null
  */
+const parseNumberParam = (value: string | null): number | null => {
+  if (!value) return null;
+  const n = Number(value);
+  return isNaN(n) ? null : n;
+};
 
-// Overload: when isRange = true → return tuple
-export function parseRangeParam(param: string | null, isRange: true): [number, number] | null;
+/**
+ * Helper to parse a numeric range param (e.g. beam, price)
+ */
+export const parseRangeParam = (param: string | null, defaultRange: [number, number]): [number, number] => {
+  if (!param) return defaultRange;
 
-// Overload: when isRange = false → return number
-export function parseRangeParam(param: string | null, isRange?: false): number | null;
+  const parts = param.split(",").map(Number);
+  if (parts.length === 2 && !parts.some(isNaN)) return [parts[0], parts[1]];
 
-export function parseRangeParam(param: string | null, isRange = false) {
-  if (!param) return null;
-
-  if (isRange) {
-    const parts = param.split("-").map(Number);
-    if (parts.length === 2 && !parts.some(isNaN)) {
-      return [parts[0], parts[1]] as [number, number];
-    }
-    return null;
-  }
-
-  const num = Number(param);
-  return isNaN(num) ? null : num;
-}
+  return defaultRange;
+};

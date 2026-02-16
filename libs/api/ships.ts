@@ -1,6 +1,6 @@
-import { buildShipQuery } from "@/helpers/buildShipQuery";
+import { buildShipSearchParams } from "@/helpers/buildShipSearchParams";
 import { apiClient } from "./axios";
-import { NumericFieldsResponse, Ship, ShipFilters, ShipsResponse, ShipTypeResponse } from "@/types/ships";
+import { Ship, ShipFiltersProps, ShipsResponse, ShipTypeResponse } from "@/types/ships";
 
 /* get all ship types */
 export const getAllShipTypes = async (): Promise<ShipTypeResponse> => {
@@ -25,9 +25,9 @@ export const getShipNumericFields = async () => {
 };
 
 /* get all published ships with query filters and pagination */
-export const fetchShips = async (filters?: ShipFilters): Promise<ShipsResponse> => {
+export const fetchShips = async (filters?: ShipFiltersProps): Promise<ShipsResponse> => {
   try {
-    const query = buildShipQuery(filters);
+    const query = filters ? buildShipSearchParams(filters) : "";
     const response = await apiClient.get(`/ships/published?${query}`);
     return response.data;
   } catch (error) {

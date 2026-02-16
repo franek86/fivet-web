@@ -66,8 +66,11 @@ const VesselsSelectInput = ({ value = [], onChange }: VesselsSelectInputProps) =
 
   return (
     <div className='flex flex-col z-8'>
-      <label className='labelInput'>Ship Type</label>
+      <label htmlFor='shipType' className='labelInput'>
+        Ship Type
+      </label>
       <Select
+        instanceId='shipType'
         options={options}
         value={selected}
         onChange={handleChange}

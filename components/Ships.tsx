@@ -1,54 +1,36 @@
-import { parseShipFiltersFromUrl } from "@/helpers/parseShipFilters";
-import { fetchShips } from "@/libs/api/ships";
+"use client";
+import { useEffect, useState } from "react";
+import { useSearchParams } from "next/navigation";
+import { useQuery } from "@tanstack/react-query";
 
 import { Ship } from "@/types/ships";
-import { useSearchParams } from "next/navigation";
-import { useEffect, useState } from "react";
-import ShipCard from "./ui/ShipCard";
+
+import { fetchShips } from "@/libs/api/ships";
+import { parseShipFiltersFromUrl } from "@/helpers/parseShipFilters";
+
+import ShipCard from "./ShipCard";
+import ShipsCardSkeleton from "./ShipCardSkeleton";
 
 const Ships = () => {
   const searchParams = useSearchParams();
-  const [ships, setShips] = useState<Ship[]>([]);
-  const [errorShips, setErrorShips] = useState<string | null>(null);
-  const [loadingShips, setLoadingShips] = useState(false);
+  const filters = parseShipFiltersFromUrl(searchParams);
 
-  const loadShips = async (params: any) => {
-    setLoadingShips(true);
-    setErrorShips(null);
-    try {
-      const { data } = await fetchShips({
-        ...params,
-        //TO DO: pagination
-      });
-      setShips(data);
-    } catch (error) {
-      console.log(error);
-      setErrorShips("Error");
-    } finally {
-      setLoadingShips(false);
-    }
-  };
+  const { data, isLoading, isError, error } = useQuery({
+    queryKey: ["ships", filters],
+    queryFn: () => fetchShips(filters),
+  });
 
-  useEffect(() => {
-    const filters = parseShipFiltersFromUrl(searchParams);
-
-    loadShips(filters);
-  }, [searchParams]);
-
-  if (loadingShips) return <p>Loading products...</p>;
-  if (errorShips) return <p>Error: {errorShips}</p>;
+  if (isLoading) return <ShipsCardSkeleton />;
+  if (isError) return <div>Error loading ships: {(error as Error).message}</div>;
+  if (!data || data.data.length === 0) return <div>No ships found</div>;
 
   return (
-    <section className='my-8 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-4 gap-4'>
-      {!ships || ships.length === 0 ? (
-        <div>No ships found</div>
-      ) : (
-        ships?.map((ship) => (
-          <div key={ship.id}>
-            <ShipCard ship={ship} />
-          </div>
-        ))
-      )}
+    <section className='my-8 grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 md:gap-8'>
+      {data?.data?.map((ship) => (
+        <div key={ship.id}>
+          <ShipCard ship={ship} />
+        </div>
+      ))}
     </section>
   );
 };

@@ -1,5 +1,4 @@
 import { fetchShip } from "@/libs/api/ships";
-import React from "react";
 
 const page = async ({ params }: { params: Promise<{ slug: string }> }) => {
   const shipSlug = (await params).slug;
