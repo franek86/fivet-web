@@ -42,24 +42,29 @@ const SearchBar = () => {
           </div>
 
           <div className='flex flex-col'>
-            <div className='flex items-center justify-between gap-2'>
-              <Label htmlFor='Beam'>Beam</Label>
-              <span className='text-muted-foreground text-sm'>{beam.join(", ")}</span>
+            <Label className='labelInput mb-4 font-bold' htmlFor='Beam'>
+              Beam
+            </Label>
+            <div className="flex flex-col justify-center 'h-[46px]">
+              <Slider id='beam' value={beam} onValueChange={(value: [number, number]) => setBeam(value)} min={0} max={2000} step={100} />
+              <div className='flex items-center justify-between gap-2 mt-1'>
+                <span className='text-muted-foreground text-sm'>{beam[0]}</span>
+                <span className='text-muted-foreground text-sm'>{beam[1]}</span>
+              </div>
             </div>
-            <Slider id='beam' value={beam} onValueChange={(value: [number, number]) => setBeam(value)} min={0} max={2000} step={100} />
           </div>
-          <div className='flex gap-2'>
+          <div className='grid grid-cols-2 gap-2'>
             <div>
-              <Label className='labelInput' htmlFor='minTonnage'>
+              <Label className='labelInput mb-3 font-bold' htmlFor='minTonnage'>
                 Min tonnage
               </Label>
-              <Input id='minTonnage' placeholder='Min...' onChange={(e) => setMinTonnage(Number(e.target.value))} />
+              <Input className='h-[46px]' id='minTonnage' placeholder='Min...' onChange={(e) => setMinTonnage(Number(e.target.value))} />
             </div>
             <div>
-              <Label className='labelInput' htmlFor='maxTonnage'>
+              <Label className='labelInput mb-3 font-bold' htmlFor='maxTonnage'>
                 Max tonnage
               </Label>
-              <Input id='maxTonnage' placeholder='Max...' onChange={(e) => setMaxTonnage(Number(e.target.value))} />
+              <Input className='h-[46px]' id='maxTonnage' placeholder='Max...' onChange={(e) => setMaxTonnage(Number(e.target.value))} />
             </div>
           </div>
           <div className='flex flex-col justify-end'>
