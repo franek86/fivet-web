@@ -28,6 +28,7 @@ export const getShipNumericFields = async () => {
 export const fetchShips = async (filters?: ShipFiltersProps): Promise<ShipsResponse> => {
   try {
     const query = filters ? buildShipSearchParams(filters) : "";
+    console.log(query);
     const response = await apiClient.get(`/ships/published?${query}`);
     return response.data;
   } catch (error) {

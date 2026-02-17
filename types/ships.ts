@@ -16,6 +16,8 @@ export interface ShipFiltersProps {
   minTonnage?: number;
   maxTonnage?: number;
   beam: [number, number];
+  limit: number;
+  page: number;
 }
 
 export interface Ship {
