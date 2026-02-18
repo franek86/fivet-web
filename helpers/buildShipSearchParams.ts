@@ -15,11 +15,24 @@ export const buildShipSearchParams = (filters: ShipFiltersProps): string => {
     params.set("maxTonnage", String(filters.maxTonnage));
   }
 
-  if (filters.page != null) {
+  // Only include page if it is > 1
+  if (filters.page != null && filters.page > 1) {
     params.set("page", String(filters.page));
   }
-  if (filters.limit != null) {
+
+  // Only include limit if it’s different from default (e.g., 10)
+  if (filters.limit != null && filters.limit !== 10) {
     params.set("limit", String(filters.limit));
+  }
+
+  // Only include search if it’s not empty
+  if (filters.search && filters.search.trim().length > 0) {
+    params.set("search", filters.search.trim());
+  }
+
+  // Add sort only if it exists
+  if (filters.sortBy && filters.sortBy.trim().length > 0) {
+    params.set("sortBy", filters.sortBy.trim());
   }
 
   // Beam (only if not default)

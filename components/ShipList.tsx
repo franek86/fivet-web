@@ -11,7 +11,7 @@ import ShipCard from "./ShipCard";
 import ShipsCardSkeleton from "./ShipCardSkeleton";
 import PaginationComponent from "./PaginationComponent";
 
-const Ships = () => {
+const ShipList = () => {
   const searchParams = useSearchParams();
   const filters = parseShipFiltersFromUrl(searchParams);
   const router = useRouter();
@@ -43,7 +43,7 @@ const Ships = () => {
 
         <p className='text-muted-foreground'>Try adjusting or clearing your filters</p>
 
-        <button onClick={() => router.push("/search")} className='btn btn-sm btn-gradient'>
+        <button onClick={() => router.push("/ships")} className='btn btn-sm btn-gradient'>
           Clear filters
         </button>
       </div>
@@ -63,4 +63,4 @@ const Ships = () => {
   );
 };
 
-export default Ships;
+export default ShipList;

@@ -30,7 +30,7 @@ const SearchBar = () => {
       maxTonnage: maxTonnage ?? null,
     });
 
-    router.replace(`/search?${query}`, { scroll: false });
+    router.replace(`/ships?${query}`, { scroll: false });
   };
 
   return (

@@ -18,6 +18,8 @@ export interface ShipFiltersProps {
   beam: [number, number];
   limit: number;
   page: number;
+  search: string;
+  sortBy: string;
 }
 
 export interface Ship {

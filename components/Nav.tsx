@@ -23,7 +23,7 @@ const NAV_ITEMS: NavType[] = [
       { href: "/about/us", label: "Organization" },
     ],
   },
-  { href: "/search", labelKey: "ships" },
+  { href: "/ships", labelKey: "ships" },
   { href: "/contact", labelKey: "contact" },
 ];
 

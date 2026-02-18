@@ -12,68 +12,73 @@ import { Input } from "./ui/input";
 import { getAllShipTypes } from "@/libs/api/ships";
 import { buildShipSearchParams } from "@/helpers/buildShipSearchParams";
 import { parseShipFiltersFromUrl } from "@/helpers/parseShipFilters";
+import { Search } from "lucide-react";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 
 const ShipFilters = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  // Get all ship type from api
+  /* Get all ship type from api */
   const { data } = useQuery({
     queryKey: ["allShipType"],
     queryFn: getAllShipTypes,
   });
 
-  //Default filters values
+  /* Default filters values */
   const defaultFilters: ShipFiltersProps = {
     shipType: [],
     beam: [0, 2000],
     minTonnage: undefined,
     maxTonnage: undefined,
+    limit: 10,
+    page: 1,
+    search: "",
+    sortBy: "",
   };
 
-  // Local filter state
+  /*  Local filter state */
   const [filters, setFilters] = useState<ShipFiltersProps>(() => parseShipFiltersFromUrl(searchParams, defaultFilters));
+  const [searchInput, setSearchInput] = useState(filters.search);
+  const [sort, setSort] = useState(filters.sortBy);
 
-  // Initial valuse from URL
+  /*  Initial valuse from URL */
   useEffect(() => {
-    //Parse ship type to e.g. "Cargo,Cruiser"
+    /*  Parse ship type to e.g. "Cargo,Cruiser" */
     const shipTypeParam = searchParams.get("shipType")?.split(",") ?? [];
 
-    //Parse beam to single params e.g. "0-2000"
+    /*  Parse beam to single params e.g. "0-2000" */
     const beamParam = searchParams.get("beam") ?? "0-2000";
     const [min, max] = beamParam?.split("-").map((b) => Number(b));
 
     const minTonnageParam = searchParams.get("minTonnage");
     const maxTonnageParam = searchParams.get("maxTonnage");
 
-    console.log(minTonnageParam, maxTonnageParam);
+    const searchParam = searchParams.get("search") ?? "";
+    const sortParam = searchParams.get("sortBy") ?? "";
+    const limitParam = searchParams.get("limit");
+    const pageParam = searchParams.get("page");
 
     setFilters({
       shipType: shipTypeParam,
       beam: [isNaN(min) ? 0 : min, isNaN(max) ? 2000 : max],
+
       minTonnage: minTonnageParam ? Number(searchParams.get("minTonnage")) : undefined,
       maxTonnage: maxTonnageParam && !isNaN(Number(maxTonnageParam)) ? Number(searchParams.get("maxTonnage")) : undefined,
+
+      search: searchParam,
+      limit: limitParam ? Number(searchParams.get("limit")) : 10,
+      page: pageParam ? Number(searchParams.get("page")) : 1,
+      sortBy: sortParam,
     });
   }, [searchParams]);
 
-  //Active filters
-  const hasActiveFilters =
-    filters.shipType.length > 0 ||
-    filters.minTonnage != null ||
-    filters.maxTonnage != null ||
-    filters.beam[0] !== 0 ||
-    filters.beam[1] !== 2000;
-
-  //Active filter count
-  const paramsArray = Array.from(searchParams.keys());
-  const count = paramsArray.length;
-
-  //Update filter change
+  /* Update filter change */
   const handleFilterChange = <K extends keyof ShipFiltersProps>(key: K, value: ShipFiltersProps[K]) => {
     setFilters((prev) => ({ ...prev, [key]: value }));
   };
 
-  //Update ship types
+  /* Update ship types */
   const handleToggleShipType = (type: string) => {
     setFilters((prev) => {
       const newShipType = prev.shipType.includes(type);
@@ -81,26 +86,104 @@ const ShipFilters = () => {
     });
   };
 
-  //Handle apply filters
+  /*  Handle apply filters */
   const handleApplyFilters = () => {
-    const query = buildShipSearchParams(filters);
-    router.push(`/search/?${query}`);
+    const query = buildShipSearchParams({ ...filters });
+    router.push(`/ships/?${query}`);
   };
 
-  //Handle clear all filters
+  /* Handle sort */
+
+  const handleSortChange = (value: string) => {
+    setFilters((prev) => ({
+      ...prev,
+      sortBy: value,
+    }));
+
+    const query = buildShipSearchParams({ ...filters, sortBy: value });
+    router.push(`/ships/?${query}`);
+  };
+
+  /* Debounce search */
+  /* const debouncedSearch = useDebounce(filters.search, 500);
+   */
+  /* Handle search */
+  const handleSearch = () => {
+    setFilters((prev) => ({
+      ...prev,
+      search: searchInput,
+      page: 1,
+    }));
+    const query = buildShipSearchParams({ ...filters, search: searchInput, page: 1 });
+    router.push(`/ships/?${query}`);
+  };
+
+  /* Sync URL when debounced value changes */
+  /*  useEffect(() => {
+    if (debouncedSearch.trim().length === 0) return;
+    const query = buildShipSearchParams({
+      ...filters,
+      search: debouncedSearch,
+      page: 1,
+    });
+
+    router.push(`/ships?${query}`, { scroll: false });
+  }, [debouncedSearch]); */
+
+  /* Handle clear all filters */
   const handleClearAllFilter = () => {
     setFilters(defaultFilters);
+    setSearchInput("");
 
-    router.push("/search", { scroll: false });
+    router.push("/ships", { scroll: false });
   };
 
   return (
     <div>
-      <div>
-        <button className='btn btn-sm btn-solid mb-6' onClick={handleClearAllFilter}>
-          Clear all filters
-        </button>
+      <button className='btn btn-sm btn-solid mb-6' onClick={handleClearAllFilter}>
+        Clear all filters
+      </button>
+
+      <div className='mb-6'>
+        <div className='flex flex-col mb-1'>
+          <Label className='font-bold text-lg' htmlFor='search'>
+            Search
+          </Label>
+          <div className='relative'>
+            <Search className='absolute left-2 top-4 h-4 w-4 text-muted-foreground' />
+            <Input
+              id='search'
+              className='pl-8'
+              placeholder='Imo,Name ...'
+              value={searchInput}
+              onChange={(e) => setSearchInput(e.target.value)}
+            />
+          </div>
+          <button className='btn btn-sm btn-gradient mt-2' onClick={() => handleSearch()}>
+            Search now
+          </button>
+        </div>
       </div>
+
+      <div className='mb-6'>
+        <div className='flex flex-col space-x-2 mb-1'>
+          <Label className='font-bold text-lg mb-2' htmlFor='sort'>
+            Sort by
+          </Label>
+          <Select value={filters.sortBy} onValueChange={handleSortChange}>
+            <SelectTrigger className='w-full'>
+              <SelectValue placeholder='Sort By' />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value='name-asc'>Name: A → Z</SelectItem>
+              <SelectItem value='name-desc'>Name: Z → A</SelectItem>
+              <SelectItem value='price-asc'>Price: Low → High</SelectItem>
+              <SelectItem value='price-desc'>Price: High → Low</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+
       <div className='mb-6'>
         <h4 className='font-bold text-lg mb-2'>Ship type</h4>
         {data?.map((shipType) => (

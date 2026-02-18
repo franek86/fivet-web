@@ -3,11 +3,11 @@ import { useState } from "react";
 
 import { FunnelPlus, FunnelX } from "lucide-react";
 
-import Ships from "./Ships";
+import ShipList from "./ShipList";
 import ShipFilters from "./ShipFilters";
 import SelectedShipFilters from "./SelectedShipFilters";
 
-const SearchSection = () => {
+const ShipsSection = () => {
   const [sideBarOpen, setSideBarOpen] = useState(true);
 
   return (
@@ -29,10 +29,10 @@ const SearchSection = () => {
           </div>
           <SelectedShipFilters />
         </div>
-        <Ships />
+        <ShipList />
       </section>
     </>
   );
 };
 
-export default SearchSection;
+export default ShipsSection;
